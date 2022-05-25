@@ -104,7 +104,7 @@ template <typename V> class CucooHashTable {
   struct val_wrapper {
     V v;
     uint32_t shared_cnt;
-    val_wrapper(const V &v) : v(v), shared_cnt(0) {++trash_lease;}
+    val_wrapper(const V &v) : v(v), shared_cnt(0) { ++trash_lease; }
     void Init(const V &v) {
       this->v = v;
       shared_cnt = 0;
@@ -341,7 +341,8 @@ public:
                  std::function<void(V *v)> evict_fn = nullptr,
                  uint8_t linear_detect_threshold = 4)
       : bucket_size(bucket_size), entry_cnt(0), invalid_k(invalid_k),
-        evict_fn(evict_fn), linear_detect_threshold(linear_detect_threshold), vw_recycle_bin(64) {
+        evict_fn(evict_fn), linear_detect_threshold(linear_detect_threshold),
+        vw_recycle_bin(64) {
     entry e;
     e.k = invalid_k;
     hashers.emplace_back(hash());
